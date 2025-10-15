@@ -8,7 +8,7 @@
 
     const config = window.openlayerConfig || {};
 
-    if (!config.kavlingUrl || !config.pelabuhanUrl) {
+    if (!config.kavlingUrl || !config.pelabuhanUrl || !config.jalurPerairanUrl) {
         console.warn('OpenLayers map configuration is incomplete.');
         return;
     }
@@ -20,6 +20,11 @@
 
     const pelabuhanSource = new ol.source.Vector({
         url: config.pelabuhanUrl,
+        format: new ol.format.GeoJSON()
+    });
+
+    const jalurPerairanSource = new ol.source.Vector({
+        url: config.jalurPerairanUrl,
         format: new ol.format.GeoJSON()
     });
 
@@ -50,14 +55,22 @@
         })
     });
 
+    const jalurPerairanLayer = new ol.layer.Vector({
+        source: jalurPerairanSource,
+        style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+                color: '#198754',
+                width: 4
+            })
+        })
+    });
+
     const map = new ol.Map({
         target: 'openlayerMap',
         layers: [
             new ol.layer.Tile({
                 source: new ol.source.OSM()
-            }),
-            kavlingLayer,
-            pelabuhanLayer
+            })
         ],
         view: new ol.View({
             center: ol.proj.fromLonLat([104.05, 1.1]),
@@ -65,22 +78,80 @@
         })
     });
 
-    const fitToKavling = () => {
-        const extent = kavlingSource.getExtent();
+    kavlingLayer.setZIndex(10);
+    pelabuhanLayer.setZIndex(20);
+    jalurPerairanLayer.setZIndex(30);
+
+    const isLayerOnMap = (layer) => map.getLayers().getArray().includes(layer);
+
+    const fitSource = (source) => {
+        const extent = source.getExtent();
         if (extent && extent.every((value) => Number.isFinite(value))) {
             map.getView().fit(extent, { padding: [24, 24, 24, 24], duration: 500 });
         }
     };
 
-    if (kavlingSource.getState() === 'ready') {
-        fitToKavling();
-    } else {
-        kavlingSource.once('change', () => {
-            if (kavlingSource.getState() === 'ready') {
-                fitToKavling();
+    const ensureLayerExtent = (layer, source) => {
+        const fitIfVisible = () => {
+            if (isLayerOnMap(layer)) {
+                fitSource(source);
+            }
+        };
+
+        if (source.getState() === 'ready') {
+            fitIfVisible();
+            return;
+        }
+
+        const listener = () => {
+            if (source.getState() === 'ready') {
+                source.un('change', listener);
+                fitIfVisible();
+            }
+        };
+
+        source.on('change', listener);
+    };
+
+    const toggleButtons = document.querySelectorAll('[data-layer-target]');
+
+    const layerMap = {
+        kavling: kavlingLayer,
+        pelabuhan: pelabuhanLayer,
+        jalur: jalurPerairanLayer
+    };
+
+    toggleButtons.forEach((button) => {
+        const target = button.getAttribute('data-layer-target');
+        const layer = layerMap[target];
+
+        if (!layer) {
+            return;
+        }
+
+        button.classList.toggle('active', isLayerOnMap(layer));
+
+        button.addEventListener('click', () => {
+            const currentlyOnMap = isLayerOnMap(layer);
+
+            if (currentlyOnMap) {
+                map.removeLayer(layer);
+                button.classList.remove('active');
+                return;
+            }
+
+            map.addLayer(layer);
+            button.classList.add('active');
+
+            if (layer === kavlingLayer) {
+                ensureLayerExtent(kavlingLayer, kavlingSource);
+            } else if (layer === pelabuhanLayer) {
+                ensureLayerExtent(pelabuhanLayer, pelabuhanSource);
+            } else if (layer === jalurPerairanLayer) {
+                ensureLayerExtent(jalurPerairanLayer, jalurPerairanSource);
             }
         });
-    }
+    });
 
     const popupContainer = document.getElementById('openlayerPopup');
     const popupContent = popupContainer?.querySelector('.popup-content') || null;
@@ -121,9 +192,17 @@
             }
 
             const nama = feature.get('nama') || 'Fitur';
-            const luas = feature.get('luas') || '-';
+            const ukuran = feature.get('luas') || '-';
+            const keterangan = feature.get('keterangan');
+            const geometryType = geometry.getType();
+            const ukuranLabel = geometryType.includes('LineString') ? 'Panjang' : 'Luas';
 
-            popupContent.innerHTML = `<strong>${nama}</strong><br>Luas: ${luas}`;
+            const details = [`<strong>${nama}</strong>`, `${ukuranLabel}: ${ukuran}`];
+            if (keterangan) {
+                details.push(keterangan);
+            }
+
+            popupContent.innerHTML = details.join('<br>');
             overlay.setPosition(coordinate);
         } else {
             overlay.setPosition(undefined);

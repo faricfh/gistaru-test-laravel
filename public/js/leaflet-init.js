@@ -8,7 +8,7 @@
 
     const config = window.leafletConfig || {};
 
-    if (!config.kavlingUrl || !config.pelabuhanUrl) {
+    if (!config.kavlingUrl || !config.pelabuhanUrl || !config.jalurPerairanUrl) {
         console.warn('Leaflet map configuration is incomplete.');
         return;
     }
@@ -51,9 +51,24 @@
         }
     });
 
+    const jalurPerairanLayer = L.geoJSON(null, {
+        style: {
+            color: '#198754',
+            weight: 4,
+            opacity: 0.7
+        },
+        onEachFeature(feature, layer) {
+            const nama = feature?.properties?.nama ?? 'Jalur Perairan';
+            const keterangan = feature?.properties?.keterangan ?? '-';
+            const panjang = feature?.properties?.luas ?? '-';
+            layer.bindPopup(`<strong>${nama}</strong><br>Panjang: ${panjang}<br>${keterangan}`);
+        }
+    });
+
     const overlays = {
         'Kavling Laut': kavlingLayer,
-        'Pelabuhan Batam': pelabuhanLayer
+        'Pelabuhan Batam': pelabuhanLayer,
+        'Jalur Perairan Batam': jalurPerairanLayer
     };
 
     L.control.layers({ 'OpenStreetMap': osmLayer }, overlays, { collapsed: false }).addTo(map);
@@ -67,6 +82,9 @@
         }),
         fetch(config.pelabuhanUrl).then((response) => response.json()).then((data) => {
             pelabuhanLayer.addData(data);
+        }),
+        fetch(config.jalurPerairanUrl).then((response) => response.json()).then((data) => {
+            jalurPerairanLayer.addData(data);
         })
     ]).catch((error) => {
         console.error('Unable to load GeoJSON layers', error);
@@ -76,7 +94,8 @@
 
     const layerMap = {
         kavling: kavlingLayer,
-        pelabuhan: pelabuhanLayer
+        pelabuhan: pelabuhanLayer,
+        jalur: jalurPerairanLayer
     };
 
     toggleButtons.forEach((button) => {
@@ -86,9 +105,7 @@
             return;
         }
 
-        if (map.hasLayer(layer)) {
-            button.classList.add('active');
-        }
+        button.classList.toggle('active', map.hasLayer(layer));
 
         button.addEventListener('click', () => {
             const isVisible = map.hasLayer(layer);

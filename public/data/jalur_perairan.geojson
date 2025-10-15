@@ -1,0 +1,59 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "nama": "Jalur Perairan Sekupang",
+                "luas": "12 km",
+                "keterangan": "Rute kapal penghubung kawasan Sekupang - pusat kota Batam"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [103.958, 1.176],
+                    [103.979, 1.163],
+                    [104.013, 1.146],
+                    [104.036, 1.131],
+                    [104.058, 1.118]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "nama": "Jalur Perairan Telaga Punggur",
+                "luas": "18 km",
+                "keterangan": "Jalur feri menuju kawasan industri dan pelabuhan udara"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [104.072, 1.110],
+                    [104.102, 1.095],
+                    [104.136, 1.085],
+                    [104.172, 1.069],
+                    [104.205, 1.052]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "nama": "Jalur Perairan Nongsa",
+                "luas": "9 km",
+                "keterangan": "Akses kapal wisata menuju Nongsa dan marina"
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [104.061, 1.192],
+                    [104.083, 1.179],
+                    [104.109, 1.168],
+                    [104.133, 1.157],
+                    [104.156, 1.149]
+                ]
+            }
+        }
+    ]
+}

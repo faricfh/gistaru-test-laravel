@@ -51,8 +51,19 @@
             </div>
             <div class="card-body">
                 <p class="text-muted small mb-3">
-                    Klik fitur kavling atau titik pelabuhan untuk melihat informasi nama perusahaan dan luas area.
+                    Gunakan tombol di bawah untuk menampilkan atau menyembunyikan lapisan.
                 </p>
+                <div class="layer-toggle btn-group mb-3" role="group" aria-label="Layer toggle">
+                    <button type="button" class="btn btn-outline-primary" data-layer-target="kavling">
+                        Perusahaan
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" data-layer-target="pelabuhan">
+                        Area Sewa
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" data-layer-target="jalur">
+                        Jalur Perairan
+                    </button>
+                </div>
                 <div id="openlayerMap" class="rounded shadow-sm position-relative"></div>
                 <div id="openlayerPopup" class="ol-popup" role="dialog" aria-live="polite" aria-label="Informasi fitur">
                     <a href="#" class="popup-closer" aria-label="Tutup popup">&times;</a>
@@ -64,7 +75,8 @@
     <script>
         window.openlayerConfig = {
             kavlingUrl: "{{ asset('data/titik_perusahaan.geojson') }}",
-            pelabuhanUrl: "{{ asset('data/area_sewa.geojson') }}"
+            pelabuhanUrl: "{{ asset('data/area_sewa.geojson') }}",
+            jalurPerairanUrl: "{{ asset('data/jalur_perairan.geojson') }}"
         };
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
