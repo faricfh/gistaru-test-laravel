@@ -126,14 +126,14 @@
         <aside class="sidebar">
             <div class="sidebar-header">
                 <h1>{{ $pageTitle ?? 'Peta Interaktif Batam' }}</h1>
-                <p>Pilih layer yang ingin ditampilkan untuk menelusuri data perairan dan aktivitas perusahaan di kawasan Batam.</p>
+                <p>Pilih layer yang ingin ditampilkan.</p>
             </div>
 
             <section class="layer-controls" aria-label="Pengaturan layer peta">
                 <h2 class="layer-group-title">Layer Peta</h2>
 
                 <div class="layer-item">
-                    <input type="checkbox" id="layer-titik-perairan" data-layer-target="titikPerairan" checked>
+                    <input type="checkbox" id="layer-titik-perairan" data-layer-target="titikPerairan">
                     <label for="layer-titik-perairan">
                         <strong>Titik Perairan</strong>
                         <span>Area perairan yang memiliki izin pemanfaatan.</span>
@@ -141,7 +141,7 @@
                 </div>
 
                 <div class="layer-item">
-                    <input type="checkbox" id="layer-titik-perusahaan" data-layer-target="titikPerusahaan" checked>
+                    <input type="checkbox" id="layer-titik-perusahaan" data-layer-target="titikPerusahaan">
                     <label for="layer-titik-perusahaan">
                         <strong>Titik Perusahaan</strong>
                         <span>Lokasi perusahaan dan fasilitas pelabuhan.</span>
@@ -149,7 +149,7 @@
                 </div>
 
                 <div class="layer-item">
-                    <input type="checkbox" id="layer-jalur-perairan" data-layer-target="jalurPerairan" checked>
+                    <input type="checkbox" id="layer-jalur-perairan" data-layer-target="jalurPerairan">
                     <label for="layer-jalur-perairan">
                         <strong>Jalur Perairan</strong>
                         <span>Rute pelayaran utama di sekitar Batam.</span>
