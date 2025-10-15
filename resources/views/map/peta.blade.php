@@ -14,16 +14,66 @@
 
         body {
             margin: 0;
+            background: linear-gradient(135deg, #f8fbff 0%, #eef5ff 100%);
+        }
+
+        .app-shell {
+            min-height: 100vh;
         }
 
         .sidebar {
             width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 1.25rem 2.5rem rgba(15, 37, 64, 0.08);
+            border-right: 1px solid rgba(13, 110, 253, 0.08);
+            padding: 1rem;
+            gap: 1.25rem;
         }
 
         @media (min-width: 768px) {
             .sidebar {
                 width: 320px;
+                padding: 1.5rem;
             }
+        }
+
+        .sidebar-header {
+            border-bottom: 1px solid rgba(13, 110, 253, 0.12);
+            padding-bottom: 0.85rem;
+            margin-bottom: 0.85rem;
+        }
+
+        .sidebar-header p {
+            font-size: 0.95rem;
+            margin-bottom: 0;
+        }
+
+        .layer-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .layer-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0.95rem;
+            border-radius: 10px;
+            border: 1px solid rgba(13, 110, 253, 0.1);
+            background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%);
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .layer-item:hover {
+            border-color: rgba(13, 110, 253, 0.35);
+        }
+
+        .layer-item .layer-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1f2d3d;
         }
 
         .map-area {
@@ -43,35 +93,42 @@
         }
     </style>
 </head>
-<body class="bg-light">
-    <div class="d-flex flex-column flex-md-row min-vh-100">
-        <aside class="sidebar bg-white border-bottom border-md-end shadow-sm p-4 d-flex flex-column gap-4">
-            <div>
+<body>
+    <div class="app-shell d-flex flex-column flex-md-row">
+        <aside class="sidebar d-flex flex-column align-items-stretch">
+            <div class="sidebar-header">
                 <h1 class="h4 mb-2">{{ $pageTitle ?? 'Peta Interaktif Batam' }}</h1>
-                <p class="mb-0 text-muted">Pilih layer yang ingin ditampilkan.</p>
+                <p class="text-muted mb-0">Aktifkan layer yang ingin ditampilkan.</p>
             </div>
 
-            <section class="d-flex flex-column gap-3" aria-label="Pengaturan layer peta">
-                <h2 class="text-uppercase fs-6 fw-semibold text-primary mb-0">Layer Peta</h2>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="layer-titik-perairan" data-layer-target="titikPerairan">
-                    <label class="form-check-label fw-semibold" for="layer-titik-perairan">Area Sewa</label>
+            <section aria-label="Pengaturan layer peta" class="layer-group">
+                <div class="layer-item">
+                    <span class="layer-label">Area Sewa</span>
+                    <div class="form-check form-switch ms-2">
+                        <input class="form-check-input" type="checkbox" id="layer-titik-perairan" data-layer-target="titikPerairan">
+                        <label class="visually-hidden" for="layer-titik-perairan">Area Sewa</label>
+                    </div>
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="layer-titik-perusahaan" data-layer-target="titikPerusahaan">
-                    <label class="form-check-label fw-semibold" for="layer-titik-perusahaan">Perusahaan</label>
+                <div class="layer-item">
+                    <span class="layer-label">Perusahaan</span>
+                    <div class="form-check form-switch ms-2">
+                        <input class="form-check-input" type="checkbox" id="layer-titik-perusahaan" data-layer-target="titikPerusahaan">
+                        <label class="visually-hidden" for="layer-titik-perusahaan">Perusahaan</label>
+                    </div>
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="layer-jalur-perairan" data-layer-target="jalurPerairan">
-                    <label class="form-check-label fw-semibold" for="layer-jalur-perairan">Jalur Perairan</label>
+                <div class="layer-item">
+                    <span class="layer-label">Jalur Perairan</span>
+                    <div class="form-check form-switch ms-2">
+                        <input class="form-check-input" type="checkbox" id="layer-jalur-perairan" data-layer-target="jalurPerairan">
+                        <label class="visually-hidden" for="layer-jalur-perairan">Jalur Perairan</label>
+                    </div>
                 </div>
             </section>
         </aside>
 
-        <main class="map-area flex-fill bg-light">
+        <main class="map-area flex-fill">
             <div id="leafletMap" role="region" aria-label="Peta interaktif wilayah Batam"></div>
         </main>
     </div>
