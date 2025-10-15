@@ -1,4 +1,4 @@
-/* global L */
+/* global L, bootstrap */
 (function () {
     const mapElement = document.getElementById('leafletMap');
 
@@ -12,6 +12,56 @@
         console.warn('Leaflet map configuration is incomplete.');
         return;
     }
+
+    const modalElement = document.getElementById('featureModal');
+    const modalTitle = modalElement?.querySelector('.modal-title') || null;
+    const modalBody = document.getElementById('featureModalBody');
+    const modalInstance = modalElement ? new bootstrap.Modal(modalElement) : null;
+
+    const hideFeatureModal = () => {
+        if (!modalInstance) {
+            return;
+        }
+
+        modalInstance.hide();
+    };
+
+    const showFeatureModal = (title, detailEntries = []) => {
+        if (!modalInstance || !modalTitle || !modalBody) {
+            return;
+        }
+
+        modalTitle.textContent = title;
+        modalBody.innerHTML = '';
+
+        const filteredEntries = detailEntries.filter((entry) => entry && entry.value);
+
+        if (filteredEntries.length === 0) {
+            const placeholder = document.createElement('p');
+            placeholder.classList.add('mb-0', 'text-muted');
+            placeholder.textContent = 'Detail tidak tersedia.';
+            modalBody.append(placeholder);
+        } else {
+            const detailList = document.createElement('dl');
+            detailList.classList.add('row', 'gx-2', 'gy-1', 'mb-0');
+
+            filteredEntries.forEach((entry) => {
+                const dt = document.createElement('dt');
+                dt.classList.add('col-4', 'fw-semibold', 'text-muted');
+                dt.textContent = entry.label;
+
+                const dd = document.createElement('dd');
+                dd.classList.add('col-8', 'mb-0');
+                dd.textContent = entry.value;
+
+                detailList.append(dt, dd);
+            });
+
+            modalBody.append(detailList);
+        }
+
+        modalInstance.show();
+    };
 
     const map = L.map(mapElement, {
         preferCanvas: true
@@ -40,11 +90,17 @@
         onEachFeature(feature, layer) {
             const properties = feature?.properties || {};
             const nama = properties.nama ?? 'Area Perairan';
-            const kategori = properties.kategori ? `<br>Kategori: ${properties.kategori}` : '';
-            const izin = properties.izin ? `<br>Izin: ${properties.izin}` : '';
-            const luas = properties.luas_m2 ? `<br>Luas: ${formatNumber(properties.luas_m2, ' m²')}` : '';
-
-            layer.bindPopup(`<strong>${nama}</strong>${kategori}${izin}${luas}`);
+            layer.on('click', (event) => {
+                event.originalEvent?.preventDefault?.();
+                showFeatureModal(nama, [
+                    { label: 'Kategori', value: properties.kategori },
+                    { label: 'Izin', value: properties.izin },
+                    {
+                        label: 'Luas',
+                        value: properties.luas_m2 ? `${formatNumber(properties.luas_m2, ' m²')}` : ''
+                    }
+                ]);
+            });
         }
     });
 
@@ -62,11 +118,17 @@
         onEachFeature(feature, layer) {
             const properties = feature?.properties || {};
             const nama = properties.nama ?? 'Titik Perusahaan';
-            const kategori = properties.kategori ? `<br>Kategori: ${properties.kategori}` : '';
-            const izin = properties.izin ? `<br>Izin: ${properties.izin}` : '';
-            const luas = properties.luas_m2 ? `<br>Luas Lahan: ${formatNumber(properties.luas_m2, ' m²')}` : '';
-
-            layer.bindPopup(`<strong>${nama}</strong>${kategori}${izin}${luas}`);
+            layer.on('click', (event) => {
+                event.originalEvent?.preventDefault?.();
+                showFeatureModal(nama, [
+                    { label: 'Kategori', value: properties.kategori },
+                    { label: 'Izin', value: properties.izin },
+                    {
+                        label: 'Luas Lahan',
+                        value: properties.luas_m2 ? `${formatNumber(properties.luas_m2, ' m²')}` : ''
+                    }
+                ]);
+            });
         }
     });
 
@@ -79,10 +141,13 @@
         onEachFeature(feature, layer) {
             const properties = feature?.properties || {};
             const nama = properties.nama ?? 'Jalur Perairan';
-            const panjang = properties.luas ? `<br>Panjang: ${properties.luas}` : '';
-            const keterangan = properties.keterangan ? `<br>${properties.keterangan}` : '';
-
-            layer.bindPopup(`<strong>${nama}</strong>${panjang}${keterangan}`);
+            layer.on('click', (event) => {
+                event.originalEvent?.preventDefault?.();
+                showFeatureModal(nama, [
+                    { label: 'Panjang', value: properties.luas || '' },
+                    { label: 'Keterangan', value: properties.keterangan || '' }
+                ]);
+            });
         }
     });
 
@@ -115,6 +180,7 @@
             fitLayer(layer);
         } else if (map.hasLayer(layer)) {
             map.removeLayer(layer);
+            hideFeatureModal();
         }
     };
 
