@@ -1,0 +1,32 @@
+{
+  "type": "FeatureCollection",
+  "name": "titik_perusahaan",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nama": "PT. Aminor Shipyard",
+        "kategori": "Pelabuhan Khusus",
+        "izin": "PKKPRL-2025/001",
+        "luas_m2": 37531
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.0052, 1.1243]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nama": "PT. Bintang Laut Nusantara",
+        "kategori": "Pelabuhan Umum",
+        "izin": "KSOP-2025/007",
+        "luas_m2": 18403
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [104.0108, 1.1289]
+      }
+    }
+  ]
+}

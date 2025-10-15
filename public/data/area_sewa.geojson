@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "name": "area_sewa",
+  "crs": { "type": "name", "properties": { "name": "EPSG:4326" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "nama": "PT. Aminor Shipyard",
+        "kategori": "Sewa Perairan",
+        "izin": "PKKPRL-2025/001",
+        "luas_m2": 37531
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [104.000000, 1.120000],
+          [104.012345, 1.121111],
+          [104.018900, 1.110000],
+          [104.006700, 1.108900],
+          [104.000000, 1.120000]
+        ]]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "nama": "PT. Aminor Shipyard - Zona KSOP",
+        "kategori": "KSOP",
+        "izin": "KSOP-2025/018",
+        "luas_m2": 18000
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [104.020000, 1.125000],
+          [104.026000, 1.125500],
+          [104.025500, 1.118000],
+          [104.019000, 1.118000],
+          [104.020000, 1.125000]
+        ]]
+      }
+    }
+  ]
+}
