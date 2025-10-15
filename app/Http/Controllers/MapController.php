@@ -6,16 +6,9 @@ use Illuminate\Contracts\View\View;
 
 class MapController extends Controller
 {
-    public function leaflet(): View
+    public function peta(): View
     {
-        return view('map.leaflet', [
-            'pageTitle' => 'Peta Interaktif Batam',
-        ]);
-    }
-
-    public function openlayer(): View
-    {
-        return view('map.openlayer', [
+        return view('map.peta', [
             'pageTitle' => 'Peta Interaktif Batam',
         ]);
     }

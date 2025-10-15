@@ -7,5 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/leaflet', [MapController::class, 'leaflet'])->name('leaflet');
-Route::get('/openlayer', [MapController::class, 'openlayer'])->name('openlayer');
+Route::get('/peta', [MapController::class, 'peta'])->name('peta');
