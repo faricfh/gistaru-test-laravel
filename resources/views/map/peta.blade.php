@@ -14,7 +14,8 @@
 
         body {
             margin: 0;
-            background: linear-gradient(135deg, #f8fbff 0%, #eef5ff 100%);
+            background: #f8f9fb;
+            color: #212529;
         }
 
         .app-shell {
@@ -23,57 +24,57 @@
 
         .sidebar {
             width: 100%;
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(6px);
-            box-shadow: 0 1.25rem 2.5rem rgba(15, 37, 64, 0.08);
-            border-right: 1px solid rgba(13, 110, 253, 0.08);
-            padding: 1rem;
-            gap: 1.25rem;
+            background: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            padding: 1.25rem;
         }
 
         @media (min-width: 768px) {
             .sidebar {
-                width: 320px;
+                width: 280px;
                 padding: 1.5rem;
             }
         }
 
         .sidebar-header {
-            border-bottom: 1px solid rgba(13, 110, 253, 0.12);
-            padding-bottom: 0.85rem;
-            margin-bottom: 0.85rem;
+            margin-bottom: 1rem;
         }
 
         .sidebar-header p {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
+            color: #6c757d;
             margin-bottom: 0;
         }
 
         .layer-group {
             display: flex;
             flex-direction: column;
-            gap: 0.65rem;
+            gap: 0.5rem;
         }
 
         .layer-item {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 0.75rem 0.95rem;
-            border-radius: 10px;
-            border: 1px solid rgba(13, 110, 253, 0.1);
-            background: linear-gradient(135deg, #ffffff 0%, #f5f9ff 100%);
-            transition: border-color 0.2s ease, transform 0.2s ease;
+            gap: 0.6rem;
+            padding: 0.35rem 0;
+            border-bottom: 1px solid #f1f3f5;
+            padding-left: 0;
         }
 
-        .layer-item:hover {
-            border-color: rgba(13, 110, 253, 0.35);
+        .layer-item:last-child {
+            border-bottom: none;
         }
 
-        .layer-item .layer-label {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1f2d3d;
+        .layer-item .form-check-input {
+            width: 1rem;
+            height: 1rem;
+            margin: 0;
+            float: none;
+        }
+
+        .layer-item .form-check-label {
+            font-size: 0.95rem;
+            margin: 0;
         }
 
         .map-area {
@@ -102,28 +103,19 @@
             </div>
 
             <section aria-label="Pengaturan layer peta" class="layer-group">
-                <div class="layer-item">
-                    <span class="layer-label">Area Sewa</span>
-                    <div class="form-check form-switch ms-2">
-                        <input class="form-check-input" type="checkbox" id="layer-titik-perairan" data-layer-target="titikPerairan">
-                        <label class="visually-hidden" for="layer-titik-perairan">Area Sewa</label>
-                    </div>
+                <div class="form-check layer-item">
+                    <input class="form-check-input" type="checkbox" id="layer-titik-perairan" data-layer-target="titikPerairan">
+                    <label class="form-check-label" for="layer-titik-perairan">Area Sewa</label>
                 </div>
 
-                <div class="layer-item">
-                    <span class="layer-label">Perusahaan</span>
-                    <div class="form-check form-switch ms-2">
-                        <input class="form-check-input" type="checkbox" id="layer-titik-perusahaan" data-layer-target="titikPerusahaan">
-                        <label class="visually-hidden" for="layer-titik-perusahaan">Perusahaan</label>
-                    </div>
+                <div class="form-check layer-item">
+                    <input class="form-check-input" type="checkbox" id="layer-titik-perusahaan" data-layer-target="titikPerusahaan">
+                    <label class="form-check-label" for="layer-titik-perusahaan">Perusahaan</label>
                 </div>
 
-                <div class="layer-item">
-                    <span class="layer-label">Jalur Perairan</span>
-                    <div class="form-check form-switch ms-2">
-                        <input class="form-check-input" type="checkbox" id="layer-jalur-perairan" data-layer-target="jalurPerairan">
-                        <label class="visually-hidden" for="layer-jalur-perairan">Jalur Perairan</label>
-                    </div>
+                <div class="form-check layer-item">
+                    <input class="form-check-input" type="checkbox" id="layer-jalur-perairan" data-layer-target="jalurPerairan">
+                    <label class="form-check-label" for="layer-jalur-perairan">Jalur Perairan</label>
                 </div>
             </section>
         </aside>
