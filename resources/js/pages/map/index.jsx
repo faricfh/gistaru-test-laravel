@@ -18,8 +18,6 @@ if (rootElement) {
         }
     }
 
-    const title = rootElement.dataset.title || 'Peta Interaktif Batam';
-
     const root = createRoot(rootElement);
-    root.render(<MapPage title={title} config={config} />);
+    root.render(<MapPage config={config} />);
 }

@@ -43,14 +43,12 @@ function Icon({ name }) {
  * MapLayout menampilkan sidebar ikon dan panel konten peta.
  *
  * @param {object} props
- * @param {string} props.title
- * @param {string} props.description
  * @param {import('react').ReactNode} props.sidebar
  * @param {import('react').MutableRefObject<HTMLDivElement | null>} props.mapContainerRef
  * @param {import('react').ReactNode} props.children
  * @returns {JSX.Element}
  */
-export default function MapLayout({ title, description, sidebar, mapContainerRef, children }) {
+export default function MapLayout({ sidebar, mapContainerRef, children }) {
     const [activePanel, setActivePanel] = useState(null);
 
     const menuItems = useMemo(
@@ -79,6 +77,15 @@ export default function MapLayout({ title, description, sidebar, mapContainerRef
 
     const closePanel = () => setActivePanel(null);
     const isPanelOpen = activePanel === 'layer';
+    const panelTitle = useMemo(() => {
+        if (activePanel === 'layer') {
+            return 'Layer';
+        }
+        if (activePanel === 'baseMap') {
+            return 'Base Map';
+        }
+        return '';
+    }, [activePanel]);
 
     return (
         <div className="map-app">
@@ -109,12 +116,14 @@ export default function MapLayout({ title, description, sidebar, mapContainerRef
                     aria-hidden={!isPanelOpen}
                 >
                     <div className="map-app__sidebar-panel-header">
-                        <div className="map-app__sidebar-header-text">
-                            <h1 className="map-app__title">{title}</h1>
-                            {description && <p className="map-app__subtitle">{description}</p>}
-                        </div>
+                        {panelTitle ? <h2 className="map-app__panel-title">{panelTitle}</h2> : <span />}
                         <button type="button" className="map-app__sidebar-close" onClick={closePanel} aria-label="Tutup">
-                            x
+                            <svg className="map-app__sidebar-close-icon" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true">
+                                <path
+                                    fill="currentColor"
+                                    d="M3.08 2.37a.75.75 0 0 0-1.06 1.06L5.94 7l-3.92 3.57a.75.75 0 1 0 1.02 1.09L7 8.13l3.96 3.52a.75.75 0 0 0 1.02-1.09L8.06 7l3.92-3.57a.75.75 0 0 0-1.02-1.09L7 5.87Z"
+                                />
+                            </svg>
                         </button>
                     </div>
                     <div className="map-app__sidebar-panel-body">{isPanelOpen ? sidebar : null}</div>

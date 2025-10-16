@@ -132,11 +132,10 @@ function sanitizeDetails(details) {
  * Halaman peta interaktif yang merender Leaflet melalui React.
  *
  * @param {object} props
- * @param {string} props.title
  * @param {Record<string, string>} props.config
  * @returns {JSX.Element}
  */
-export default function MapPage({ title, config }) {
+export default function MapPage({ config }) {
     const mapContainerRef = useRef(null);
     const mapRef = useRef(null);
     const layersRef = useRef({});
@@ -350,8 +349,6 @@ export default function MapPage({ title, config }) {
     return (
         <>
             <MapLayout
-                title={title}
-                description="Aktifkan layer untuk melihat data spasial yang relevan."
                 sidebar={<LayerToggleList items={sidebarItems} onToggle={handleToggleLayer} />}
                 mapContainerRef={mapContainerRef}
             >
