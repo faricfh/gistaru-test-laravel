@@ -9,3 +9,224 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+body.map-app-body {
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f8f9fb;
+    color: #212529;
+    font-family: var(--font-sans);
+}
+
+.map-app-body #map-root {
+    min-height: 100vh;
+}
+
+.map-app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 768px) {
+    .map-app {
+        flex-direction: row;
+    }
+}
+
+.map-app__sidebar {
+    width: 100%;
+    background-color: #ffffff;
+    border-right: 1px solid #e5e7eb;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+    .map-app__sidebar {
+        width: 320px;
+    }
+}
+
+.map-app__sidebar-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.map-app__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.map-app__subtitle {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+.map-app__sidebar-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.map-app__map {
+    position: relative;
+    flex: 1;
+    min-height: 60vh;
+}
+
+@media (min-width: 768px) {
+    .map-app__map {
+        min-height: 100vh;
+    }
+}
+
+.map-app__map-canvas {
+    position: absolute;
+    inset: 0;
+}
+
+.map-app__layer-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.map-app__layer-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.map-app__layer-item:last-child {
+    border-bottom: none;
+}
+
+.map-app__layer-checkbox {
+    width: 1.1rem;
+    height: 1.1rem;
+    margin-top: 0.25rem;
+}
+
+.map-app__layer-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.map-app__layer-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.map-app__layer-hint {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+.map-app__layer-hint--error {
+    color: #dc3545;
+}
+
+.map-app__modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(15, 23, 42, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 1100;
+}
+
+.map-app__modal {
+    width: min(420px, 100%);
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 1.5rem 3rem -1rem rgba(15, 23, 42, 0.3);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.map-app__modal-header,
+.map-app__modal-footer {
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.map-app__modal-title {
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+}
+
+.map-app__modal-close {
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.map-app__modal-body {
+    padding: 0 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.map-app__modal-empty {
+    margin: 0;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+.map-app__modal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.map-app__modal-list-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.map-app__modal-term {
+    margin: 0;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.map-app__modal-definition {
+    margin: 0;
+    text-align: right;
+}
+
+.map-app__modal-button {
+    padding: 0.45rem 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #0d6efd;
+    color: #ffffff;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.map-app__modal-button:hover {
+    background-color: #0b5ed7;
+}

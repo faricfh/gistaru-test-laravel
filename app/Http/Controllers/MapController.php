@@ -10,6 +10,11 @@ class MapController extends Controller
     {
         return view('map.peta', [
             'pageTitle' => 'Peta Interaktif Batam',
+            'mapConfig' => [
+                'titikPerairanUrl' => asset('data/area_sewa.geojson'),
+                'titikPerusahaanUrl' => asset('data/titik_perusahaan.geojson'),
+                'jalurPerairanUrl' => asset('data/jalur_perairan.geojson'),
+            ],
         ]);
     }
 }
