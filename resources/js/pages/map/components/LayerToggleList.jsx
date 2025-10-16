@@ -38,7 +38,7 @@ export default function LayerToggleList({ items, onToggle }) {
                         />
                         <div className="map-app__layer-text">
                             <span className="map-app__layer-label">{label}</span>
-                            {hint && (
+                            {/* {hint && (
                                 <span
                                     className={`map-app__layer-hint${
                                         status === 'error' ? ' map-app__layer-hint--error' : ''
@@ -46,7 +46,7 @@ export default function LayerToggleList({ items, onToggle }) {
                                 >
                                     {hint}
                                 </span>
-                            )}
+                            )} */}
                         </div>
                     </label>
             );
